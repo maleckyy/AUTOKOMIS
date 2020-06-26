@@ -81,7 +81,7 @@ public class Car {
 
 
     public String carName;
-    public int wartosc;
+    public double wartosc;
     public String marka;
     public int przebieg;
     public String kolor;
@@ -138,17 +138,17 @@ public class Car {
         this.segment = segment;
     }
 
-    public int getWartosc() {
+    public double getWartosc() {
         return wartosc;
     }
 
     public String toString() {
         if(dostawcza==true){
-            String samochodInfo ="Dostawczy "+ getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości "
+            String samochodInfo ="Dostawczy "+ getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $"
                     + getWartosc()+" o przestrzeni ładunkowej " +pladunkowa;
         return samochodInfo;
         }else {
-            String samochodInfo =getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości " + getWartosc();
+            String samochodInfo =getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $" + getWartosc();
         return samochodInfo;
         }
     }
@@ -166,7 +166,7 @@ public class Car {
         this.mnoznikCeny = mnoznikCeny;
     }
 
-    public void setWartosc(int wartosc) {
+    public void setWartosc(double wartosc) {
         this.wartosc=wartosc;
 
     }

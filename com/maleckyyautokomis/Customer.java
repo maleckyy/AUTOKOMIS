@@ -36,6 +36,7 @@ public class Customer {
         }
 
         public String toString(){
-            return customerName+" ma "+kasaKlienta+" a jego ulubione marki to "+favMarka1+" i "+favMarka2+".";
+            return customerName+" ma $"+kasaKlienta+" a jego ulubione marki to "+favMarka1+" i "+favMarka2+".";
         }
+
 }

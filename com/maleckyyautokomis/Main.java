@@ -67,7 +67,7 @@ public class Main {
 
     c3 = random.nextInt(20000) + 27000;
 
-    c4 = random.nextInt(45000) + 10000;
+    c4 = random.nextInt(40000) + 15000;
 
     //GENERATOR PRZEBIEGÓW
     int p1 = random.nextInt(100000) + 100000;
@@ -91,6 +91,7 @@ public class Main {
         adrian.imie="Adrian";
         adrian.skutecznosc=random.nextInt(10);
         adrian.cenaMechanika=400;
+//dokonczyc
 
         mechanicy.add(0,janusz);
         mechanicy.add(1,marian);
@@ -155,7 +156,8 @@ public class Main {
         pierwszy.wartosc=c2;
         pierwszy.segment=segmentsamo[2];
         pierwszy.dostawcza=false;
-        System.out.println(pierwszy+"to ten kdsaodacncans ");
+        pierwszy.wartosc=random.nextInt(8000)+8000;
+
 
         c2 = random.nextInt(10000) + 15000;
 
@@ -164,7 +166,7 @@ public class Main {
         drugi.wartosc=c2;
         drugi.segment=segmentsamo[1];
         drugi.dostawcza=false;
-        System.out.println(drugi+"to ten kdsaodacncans ");
+
 
         c2 = random.nextInt(10000) + 15000;
 
@@ -173,15 +175,13 @@ public class Main {
         trzeci.wartosc=c2;
         trzeci.segment=segmentsamo[2];
         trzeci.dostawcza=false;
-        System.out.println(trzeci+"to ten kdsaodacncans ");
+
         samochoduDoKupienia.add(pierwszy);
         samochoduDoKupienia.add(drugi);
         samochoduDoKupienia.add(trzeci);
 
 
-//TWORZENIE SAMOCHODU Z KONSTRUKTORA
-
-        System.out.println(customer1.toString());
+//TWORZENIE SAMOCHODU Z KONSTRUKTORa
 
         Car oktan =new Car();
         samochody.add(oktan);
@@ -227,7 +227,6 @@ public class Main {
 
         Car oktan14 =new Car();
         samochody.add(oktan14);
-        System.out.println(oktan14+"chuj razy 3");
 //OPCJE UŻYTKOWNIKA
             int liczbaTur = 0;
 
@@ -273,13 +272,18 @@ public class Main {
                         System.out.println("Który samochod chcesz kupić?");
                         System.out.println("Wybierz numer od 1 do "+ samochoduDoKupienia.size());
                         int wyborKupna=scanner.nextInt();
-                        if(player.kasa>samochoduDoKupienia.get(wyborKupna-1).getWartosc()){
-                            System.out.println("Kupiłeś "+samochoduDoKupienia.get(wyborKupna-1).kupny());
-                            player.kasa-=samochoduDoKupienia.get(wyborKupna-1).getWartosc();
-                            posiadaneSamochody.add(samochoduDoKupienia.get(wyborKupna-1));
-                            samochoduDoKupienia.remove(wyborKupna-1);
+                        if(wyborKupna<=samochoduDoKupienia.size()) {
+                            if (player.kasa > samochoduDoKupienia.get(wyborKupna - 1).getWartosc()) {
+                                System.out.println("Kupiłeś " + samochoduDoKupienia.get(wyborKupna - 1).kupny());
+                                player.kasa -= samochoduDoKupienia.get(wyborKupna - 1).getWartosc();
+                                posiadaneSamochody.add(samochoduDoKupienia.get(wyborKupna - 1));
+                                samochoduDoKupienia.remove(wyborKupna - 1);
+                            }else{
+                                System.out.println("Nie masz tyle pieniędzy by kupić pojazd.");
+                            }
+                        }else{
+                            System.out.println("Nie ma takiego samochodu.");
                         }
-
 
                         break;
 
@@ -329,9 +333,12 @@ public class Main {
                         int naprawa = scanner.nextInt();
                         switch (naprawa) {
                             case 1:
-                                if(player.kasa>(200 +czynnikNaprawy)){
-                                    System.out.println("Naprawiłeś "+posiadaneSamochody.get(wyborNaprawy-1).kupny()+" i zapłaciłeś "+200 +czynnikNaprawy);
-                                player.kasa-=200+czynnikNaprawy;
+                                if(player.kasa>cenahamulce){
+                                    System.out.println("Naprawiłeś "+posiadaneSamochody.get(wyborNaprawy-1).kupny()+" i zapłaciłeś "+cenahamulce);
+                                player.kasa-=cenahamulce;
+                                double nowaCena=posiadaneSamochody.get(wyborNaprawy-1).getWartosc()*1.1;
+                                    posiadaneSamochody.get(wyborNaprawy-1).setWartosc(nowaCena);
+                                    System.out.println(posiadaneSamochody.get(wyborNaprawy-1));
                                 }else{
 
                             }
@@ -361,8 +368,11 @@ public class Main {
                         break;
 
                     case 5:
-                        System.out.println(potKlienci);
+                        for (int i = 0; i < potKlienci.size(); i++) {
+                            System.out.println(i + 1 + "." + potKlienci.get(i));
 
+                        }
+                        break;
 
                     case 6:
                         //dodaje ture
