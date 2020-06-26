@@ -1,7 +1,5 @@
 package com.maleckyyautokomis;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Car {
@@ -18,43 +16,61 @@ public class Car {
 
         c3 = random.nextInt(20000) + 27000;
 
-        marka=markisamo[numerek];
-        kolor=kolorsamo[numerek];
-        segment=segmentsamo[numerek1];
-        przebieg=p1;
 
-        if (marka == markisamo[3] || marka == markisamo[4]) {
-            if (segment == segmentsamo[0]) {
-                wartosc = c1 + 10000;
-            } else if (segment == segmentsamo[1]) {
-                wartosc = c1 + 5000;
+        int losDostawczy= random.nextInt(5);
+        if(losDostawczy==3){
+            //fira dostawcza
+            setDostawcza(true);
+            marka=markisamo[numerek];
+            kolor=kolorsamo[numerek];
+            segment=segmentsamo[1];
+            przebieg=p1;
+            pladunkowa=random.nextInt(8)+2;
+
+
+        }else{
+            setDostawcza(false);
+            marka=markisamo[numerek];
+            kolor=kolorsamo[numerek];
+            segment=segmentsamo[numerek1];
+            przebieg=p1;
+
+            if (marka == markisamo[3] || marka == markisamo[4]) {
+                if (segment == segmentsamo[0]) {
+                    wartosc = c1 + 10000;
+                } else if (segment == segmentsamo[1]) {
+                    wartosc = c1 + 5000;
+                } else {
+                    wartosc = c1;
+                }
+            } else if (marka == markisamo[0] || marka == markisamo[1]) {
+                if (segment == segmentsamo[0]) {
+                    wartosc = c2 + 10000;
+                } else if (segment == segmentsamo[1]) {
+                    wartosc = c2 + 5000;
+                } else {
+                    wartosc = c2;
+                }
             } else {
-                wartosc = c1;
+                if (segment == segmentsamo[0]) {
+                    wartosc = c3 + 10000;
+                } else if (segment == segmentsamo[1]) {
+                    wartosc = c3 + 5000;
+                } else {
+                    wartosc = c3;
+                }
             }
-        } else if (marka == markisamo[0] || marka == markisamo[1]) {
-            if (segment == segmentsamo[0]) {
-                wartosc = c2 + 10000;
-            } else if (segment == segmentsamo[1]) {
-                wartosc = c2 + 5000;
+            if (marka == markisamo[2]) {
+                mnoznikCeny = 3;
+            } else if (marka == markisamo[0] || marka == markisamo[1]) {
+                mnoznikCeny = 2;
             } else {
-                wartosc = c2;
+                mnoznikCeny = 1;
             }
-        } else {
-            if (segment == segmentsamo[0]) {
-                wartosc = c3 + 10000;
-            } else if (segment == segmentsamo[1]) {
-                wartosc = c3 + 5000;
-            } else {
-                wartosc = c3;
-            }
+
         }
-        if (marka == markisamo[2]) {
-            mnoznikCeny = 3;
-        } else if (marka == markisamo[0] || marka == markisamo[1]) {
-            mnoznikCeny = 2;
-        } else {
-            mnoznikCeny = 1;
-        }
+
+
     }
 
     String markisamo[] = {"Volvo", "BMW", "Mercedes", "Opel", "Fiat"};
@@ -74,6 +90,9 @@ public class Car {
 
     //dodać info o tym czy fura dostawcza
     public boolean dostawcza;
+    public int pladunkowa;
+
+
 
 
     public String getCarName() {
@@ -87,12 +106,7 @@ public class Car {
 
     public void setMarka(String marka) {
 
-        Random random = new Random();
-        int numerek = random.nextInt(5);
-        this.setMarka(markisamo[numerek]);
-        numerek = random.nextInt(5);
-
-
+       this.marka=marka;
 
     }
 
@@ -101,10 +115,9 @@ public class Car {
     }
 
     public void setPrzebieg(int przebieg) {
-        Random random = new Random();
-        int p1 = random.nextInt(100000) + 100000;
 
-        this.przebieg = p1;
+
+        this.przebieg = przebieg;
     }
 
     public String getKolor() {
@@ -113,10 +126,7 @@ public class Car {
     }
 
     public void setKolor(String kolor) {
-        Random random = new Random();
-
-        int numerek = random.nextInt(5);
-        this.setKolor(kolorsamo[numerek]);
+        this.kolor=kolor;
 
     }
 
@@ -133,9 +143,19 @@ public class Car {
     }
 
     public String toString() {
-        String samochodInfo = getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości " + getWartosc();
+        if(dostawcza==true){
+            String samochodInfo ="Dostawczy "+ getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości "
+                    + getWartosc()+" o przestrzeni ładunkowej " +pladunkowa;
         return samochodInfo;
+        }else {
+            String samochodInfo =getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości " + getWartosc();
+        return samochodInfo;
+        }
     }
+    public String kupny(){
+        String kupne= getKolor()+" "+getMarka()+" w wersji "+getSegment();
+
+ return kupne;   }
 
 
     public int getMnoznikCeny() {
@@ -147,52 +167,15 @@ public class Car {
     }
 
     public void setWartosc(int wartosc) {
+        this.wartosc=wartosc;
 
+    }
 
-        Random random = new Random();
+    public boolean isDostawcza() {
+        return dostawcza;
+    }
 
-        int c1, c2, c3, c4;//c1 tania(fiat opel),c2 srednia(volvo bmw) c3 droga(merc), c4 to kasa klienta
-        c1 = random.nextInt(7000) + 5000;
-
-        c2 = random.nextInt(10000) + 15000;
-
-        c3 = random.nextInt(20000) + 27000;
-
-        c4 = random.nextInt(45000) + 10000;
-
-        String markisamo[] = {"Volvo", "BMW", "Mercedes", "Opel", "Fiat"};
-
-        String kolorsamo[] = {"Czerwony", "Czarny", "Szary", "Niebieski", "Żółty"};
-
-        String segmentsamo[] = {"Premium", "Standard", "Budget"};
-
-
-        if (getMarka() == markisamo[3] || getMarka() == markisamo[4]) {
-            if (getSegment() == segmentsamo[0]) {
-                this.setWartosc(c1 + 10000);
-            } else if (getSegment() == segmentsamo[1]) {
-                this.setWartosc(c1 + 5000);
-            } else {
-                this.setWartosc(c1);
-            }
-        } else if (getMarka() == markisamo[0] || getMarka() == markisamo[1]) {
-            if (getSegment() == segmentsamo[0]) {
-                this.setWartosc(c2 + 10000);
-            } else if (getSegment() == segmentsamo[1]) {
-                this.setWartosc(c2 + 5000);
-            } else {
-                this.setWartosc(c2);
-            }
-        } else {
-            if (getSegment() == segmentsamo[0]) {
-                this.setWartosc(c3 + 10000);
-            } else if (getSegment() == segmentsamo[1]) {
-                this.setWartosc(c3 + 5000);
-            } else {
-                this.setWartosc(c3);
-            }
-
-
-        }
+    public void setDostawcza(boolean dostawcza) {
+        this.dostawcza = dostawcza;
     }
 }

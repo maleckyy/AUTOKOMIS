@@ -1,6 +1,7 @@
 package com.maleckyyautokomis;
 
 import javax.swing.text.html.HTMLEditorKit;
+import java.io.Console;
 import java.util.*;
 
 public class Main {
@@ -36,15 +37,17 @@ public class Main {
 //IMIONa KLIENTÓW ,jest ich 15.
     String klientName[] = {"Paweł", "Marcin", "Roman", "Rysiek", "Michał", "Patryk", "Adam", "Janek", "Szymon", "Mikołaj", "Olaf", "Wojtek", "Matuesz", "Oskar", "Daniel"};
 
-//LISTY ZMIENIAJĄCE SIE
-    ArrayList posiadaneSamochody = new ArrayList();
-    ArrayList potKlienci = new ArrayList();
-    ArrayList samochoduDoKupienia = new ArrayList();
+//LISTY
+    ArrayList<Car>posiadaneSamochody = new ArrayList<Car>();
+    ArrayList<Customer> potKlienci = new ArrayList<Customer>();
+    ArrayList<Car>samochoduDoKupienia = new ArrayList<Car>();
     ArrayList hisNapraw = new ArrayList();
     ArrayList hisTranzakcji = new ArrayList();
 
-    ArrayList samochody = new ArrayList();
-    ArrayList klienci = new ArrayList();
+    ArrayList <Car>samochody = new ArrayList<Car>();
+    ArrayList <Customer>klienci = new ArrayList<Customer>();
+    ArrayList <Mechanicy>mechanicy = new ArrayList<Mechanicy>();
+
 
 //GENERATORY LOSOWYCH LICZB
     //ZAKRES 5 LICZB i 3 LICZB i 15
@@ -69,12 +72,38 @@ public class Main {
     //GENERATOR PRZEBIEGÓW
     int p1 = random.nextInt(100000) + 100000;
 
+//mechanicy
+        Mechanicy janusz=new Mechanicy();
+        janusz.imie="Janusz";
+        janusz.cenaMechanika=1000;
+
+        Mechanicy marian=new Mechanicy();
+        marian.imie="Marian";
+        marian.skutecznosc=random.nextInt(10);
+        if(marian.skutecznosc==4){
+            //pomoc janusza
+            marian.cenaMechanika=900;
+        }else{
+            marian.cenaMechanika=600;
+        }
+
+        Mechanicy adrian=new Mechanicy();
+        adrian.imie="Adrian";
+        adrian.skutecznosc=random.nextInt(10);
+        adrian.cenaMechanika=400;
+
+        mechanicy.add(0,janusz);
+        mechanicy.add(1,marian);
+        mechanicy.add(2,adrian);
+
     //TWORZENIE KLIENTA
         Customer customer1 = new Customer();
-        klienci.add(customer1);
+        customer1.favMarka1=markisamo[4];
+        potKlienci.add(customer1);
 
         Customer customer2 = new Customer();
-        klienci.add(customer2);
+        customer2.favMarka1=markisamo[3];
+        potKlienci.add(customer2);
 
         Customer customer3 = new Customer();
         klienci.add(customer3);
@@ -125,6 +154,7 @@ public class Main {
         pierwszy.marka=markisamo[4];
         pierwszy.wartosc=c2;
         pierwszy.segment=segmentsamo[2];
+        pierwszy.dostawcza=false;
         System.out.println(pierwszy+"to ten kdsaodacncans ");
 
         c2 = random.nextInt(10000) + 15000;
@@ -133,6 +163,7 @@ public class Main {
         drugi.marka=markisamo[4];
         drugi.wartosc=c2;
         drugi.segment=segmentsamo[1];
+        drugi.dostawcza=false;
         System.out.println(drugi+"to ten kdsaodacncans ");
 
         c2 = random.nextInt(10000) + 15000;
@@ -141,6 +172,7 @@ public class Main {
         trzeci.marka=markisamo[3];
         trzeci.wartosc=c2;
         trzeci.segment=segmentsamo[2];
+        trzeci.dostawcza=false;
         System.out.println(trzeci+"to ten kdsaodacncans ");
         samochoduDoKupienia.add(pierwszy);
         samochoduDoKupienia.add(drugi);
@@ -152,64 +184,50 @@ public class Main {
         System.out.println(customer1.toString());
 
         Car oktan =new Car();
-        System.out.println(oktan);
         samochody.add(oktan);
 
         Car oktan1 =new Car();
-        System.out.println(oktan1);
         samochody.add(oktan1);
 
         Car oktan2 =new Car();
-        System.out.println(oktan2);
         samochody.add(oktan2);
 
         Car oktan3 =new Car();
-        System.out.println(oktan3);
         samochody.add(oktan3);
 
         Car oktan4 =new Car();
-        System.out.println(oktan4);
         samochody.add(oktan4);
 
         Car oktan5 =new Car();
-        System.out.println(oktan5);
         samochody.add(oktan5);
 
         Car oktan6 =new Car();
-        System.out.println(oktan6);
         samochody.add(oktan6);
 
         Car oktan7 =new Car();
-        System.out.println(oktan7);
         samochody.add(oktan7);
 
         Car oktan8 =new Car();
-        System.out.println(oktan8);
         samochody.add(oktan8);
 
         Car oktan9 =new Car();
-        System.out.println(oktan9);
         samochody.add(oktan9);
 
         Car oktan10 =new Car();
-        System.out.println(oktan10);
         samochody.add(oktan10);
 
         Car oktan11 =new Car();
-        System.out.println(oktan11);
         samochody.add(oktan11);
 
         Car oktan12 =new Car();
-        System.out.println(oktan12);
         samochody.add(oktan12);
 
         Car oktan13 =new Car();
-        System.out.println(oktan13);
         samochody.add(oktan13);
 
         Car oktan14 =new Car();
-        System.out.println(oktan14);
         samochody.add(oktan14);
+        System.out.println(oktan14+"chuj razy 3");
 //OPCJE UŻYTKOWNIKA
             int liczbaTur = 0;
 
@@ -250,9 +268,20 @@ public class Main {
                         for (int i = 0; i < samochoduDoKupienia.size(); i++) {
                             System.out.println(i + 1 + "." + samochoduDoKupienia.get(i));
 
+                        }
+                        System.out.println("");
+                        System.out.println("Który samochod chcesz kupić?");
+                        System.out.println("Wybierz numer od 1 do "+ samochoduDoKupienia.size());
+                        int wyborKupna=scanner.nextInt();
+                        if(player.kasa>samochoduDoKupienia.get(wyborKupna-1).getWartosc()){
+                            System.out.println("Kupiłeś "+samochoduDoKupienia.get(wyborKupna-1).kupny());
+                            player.kasa-=samochoduDoKupienia.get(wyborKupna-1).getWartosc();
+                            posiadaneSamochody.add(samochoduDoKupienia.get(wyborKupna-1));
+                            samochoduDoKupienia.remove(wyborKupna-1);
+                        }
 
 
-                        }break;
+                        break;
 
                     case 3:
                         //pokazuje posiadane samochody
@@ -264,26 +293,49 @@ public class Main {
 
                     case 4:
                         //pokazuje i naprawia samochody+tura lub wraca do menu
+                        System.out.println("Do jakiego mechanika chcesz sie udać?");
+                        System.out.println("");
+                        System.out.println("1. Janusz- drogi ale zawsze zrobi jak trzeba- "+ janusz.cenaMechanika);
+                        System.out.println("2. Marian- ceny zwyczajne ale czasem nie wyjdzie i Janusz bedzie musiał pomagać- "+marian.cenaMechanika);
+                        System.out.println("3. Adrian- tania robota ale jak zepsuje to twoja strata- "+adrian.cenaMechanika);
+                        int wybormechanika=scanner.nextInt();
+
                         System.out.println("");
                         System.out.println("Który samochód chciałbyś naprawić?");
 
                         for (int liczba = 0; liczba < posiadaneSamochody.size(); liczba++) {
                             System.out.println(liczba + 1 + "." + posiadaneSamochody.get(liczba));
                         }
+                        int wyborNaprawy=scanner.nextInt();
+
+                        int czynnikNaprawy=posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny()+mechanicy.get(wybormechanika).cenaMechanika;
+
+                        int cenahamulce,cenazawieszenie,cenasilnik,cenakaroseria,cenaskrzynia;
+                        cenahamulce=(200*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
+                        cenazawieszenie=(600*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
+                        cenasilnik=(3000*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
+                        cenakaroseria=(1500*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
+                        cenaskrzynia=(1500*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
 
 
                   System.out.println("Co chciałbyś naprawić?");
                         System.out.println("");
-                 /*       System.out.println("1.Hamulce, podniosą wartość auta o 10% - koszt to " + 200 * car1.mnoznikCeny + " złotych.");
-                        System.out.println("2.Zawieszenie, podniesie wartość auta o 20% - koszt to " + 600 * car1.mnoznikCeny + "złotych.");
-                        System.out.println("3.Silnik, podniesie wartość auta o 100% - koszt to " + 3000 * car1.mnoznikCeny + "złotych.");
-                        System.out.println("4.Karoseria, podniesie wartość auta o 50% - koszt to " + 1500 * car1.mnoznikCeny + "złotych.");
-                        System.out.println("5.Skrzynia biegów, podniesie wartość auta o 50% - koszt to " + 1500 * car1.mnoznikCeny + "złotych.");
-                        System.out.println("6.Powrót.");*/
+                        System.out.println("1.Hamulce, podniosą wartość auta o 10% - koszt to " + cenahamulce+ " złotych.");
+                        System.out.println("2.Zawieszenie, podniesie wartość auta o 20% - koszt to " + cenazawieszenie+ "złotych.");
+                        System.out.println("3.Silnik, podniesie wartość auta o 100% - koszt to " + cenasilnik + "złotych.");
+                        System.out.println("4.Karoseria, podniesie wartość auta o 50% - koszt to " + cenakaroseria + "złotych.");
+                        System.out.println("5.Skrzynia biegów, podniesie wartość auta o 50% - koszt to " +cenaskrzynia + "złotych.");
+                        System.out.println("6.Powrót.");
                         int naprawa = scanner.nextInt();
                         switch (naprawa) {
                             case 1:
-                                //usuwanie kassy
+                                if(player.kasa>(200 +czynnikNaprawy)){
+                                    System.out.println("Naprawiłeś "+posiadaneSamochody.get(wyborNaprawy-1).kupny()+" i zapłaciłeś "+200 +czynnikNaprawy);
+                                player.kasa-=200+czynnikNaprawy;
+                                }else{
+
+                            }
+
 
                                 //pomnozenie wartosci samochodu
                                 liczbaTur += 1;
@@ -327,7 +379,12 @@ public class Main {
                         int z = scanner.nextInt();
                         switch (z) {
                             case 1:
-                                //dodać 2 nowych klientów
+                                potKlienci.add(klienci.get(0));
+                                klienci.remove(0);
+
+                                potKlienci.add(klienci.get(0));
+                                klienci.remove(0);
+
                                 player.kasa -= 1000;
                                 liczbaTur += 1;
 
@@ -339,7 +396,8 @@ public class Main {
                                 if (szansa == 1) {
                                     System.out.println("Kupiłes reklame w internecie. Pozyskałeś nowego klienta.");
                                     player.kasa -= 200;
-                                    //dodać i klienta
+                                    potKlienci.add(klienci.get(0));
+                                    klienci.remove(0);
                                 } else {
                                     System.out.println("Kupiłes reklame w internecie. Niestety nie pozyskałeś żadnego nowego klienta.");
                                     player.kasa -= 200;
@@ -358,8 +416,9 @@ public class Main {
                         System.out.println("Stan konta wynosi " + player.kasa + " złotych.");
                         break;
 
-                    case 9:posiadaneSamochody.add(samochody.get(0));
-                    samochody.remove(0);
+                    case 9:
+
+
 //historia tranzakcji
 break;
                     case 10:
