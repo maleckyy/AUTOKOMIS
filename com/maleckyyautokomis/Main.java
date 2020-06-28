@@ -2,6 +2,7 @@ package com.maleckyyautokomis;
 
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.Console;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
@@ -11,6 +12,7 @@ public class Main {
 
         Player player = new Player();
         player.kasa = 20000.00;
+        int mycia;
 
 
 //INTRO GIERKI
@@ -42,7 +44,8 @@ public class Main {
     ArrayList<Customer> potKlienci = new ArrayList<Customer>();
     ArrayList<Car>samochoduDoKupienia = new ArrayList<Car>();
     ArrayList hisNapraw = new ArrayList();
-    ArrayList hisTranzakcji = new ArrayList();
+    ArrayList<Car> hisTranzakcjiKupno = new ArrayList<Car>();
+    ArrayList<Car>hisTranzakcjiSprzedarz = new ArrayList<Car>();
 
     ArrayList <Car>samochody = new ArrayList<Car>();
     ArrayList <Customer>klienci = new ArrayList<Customer>();
@@ -80,12 +83,8 @@ public class Main {
         Mechanicy marian=new Mechanicy();
         marian.imie="Marian";
         marian.skutecznosc=random.nextInt(10);
-        if(marian.skutecznosc==4){
-            //pomoc janusza
-            marian.cenaMechanika=900;
-        }else{
-            marian.cenaMechanika=600;
-        }
+        marian.cenaMechanika=600;
+
 
         Mechanicy adrian=new Mechanicy();
         adrian.imie="Adrian";
@@ -275,7 +274,8 @@ public class Main {
                         if(wyborKupna<=samochoduDoKupienia.size()) {
                             if (player.kasa > samochoduDoKupienia.get(wyborKupna - 1).getWartosc()) {
                                 System.out.println("Kupiłeś " + samochoduDoKupienia.get(wyborKupna - 1).kupny());
-                                player.kasa -= samochoduDoKupienia.get(wyborKupna - 1).getWartosc();
+                                player.kasa -=40+ (samochoduDoKupienia.get(wyborKupna - 1).getWartosc())*1.02;
+                                samochoduDoKupienia.get(wyborKupna - 1).liczbaMyc++;
                                 posiadaneSamochody.add(samochoduDoKupienia.get(wyborKupna - 1));
                                 samochoduDoKupienia.remove(wyborKupna - 1);
                             }else{
@@ -312,14 +312,12 @@ public class Main {
                         }
                         int wyborNaprawy=scanner.nextInt();
 
-                        int czynnikNaprawy=posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny()+mechanicy.get(wybormechanika).cenaMechanika;
-
                         int cenahamulce,cenazawieszenie,cenasilnik,cenakaroseria,cenaskrzynia;
-                        cenahamulce=(200*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
-                        cenazawieszenie=(600*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
-                        cenasilnik=(3000*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
-                        cenakaroseria=(1500*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
-                        cenaskrzynia=(1500*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika).cenaMechanika;
+                        cenahamulce=(200*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika-1).cenaMechanika;
+                        cenazawieszenie=(600*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika-1).cenaMechanika;
+                        cenasilnik=(3000*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika-1).cenaMechanika;
+                        cenakaroseria=(1500*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika-1).cenaMechanika;
+                        cenaskrzynia=(1500*posiadaneSamochody.get(wyborNaprawy-1).getMnoznikCeny())+mechanicy.get(wybormechanika-1).cenaMechanika;
 
 
                   System.out.println("Co chciałbyś naprawić?");
@@ -335,33 +333,61 @@ public class Main {
                             case 1:
                                 if(player.kasa>cenahamulce){
                                     System.out.println("Naprawiłeś "+posiadaneSamochody.get(wyborNaprawy-1).kupny()+" i zapłaciłeś "+cenahamulce);
-                                player.kasa-=cenahamulce;
-                                double nowaCena=posiadaneSamochody.get(wyborNaprawy-1).getWartosc()*1.1;
+                                    player.kasa-=cenahamulce;
+                                    double nowaCena=posiadaneSamochody.get(wyborNaprawy-1).getWartosc()*2;
                                     posiadaneSamochody.get(wyborNaprawy-1).setWartosc(nowaCena);
                                     System.out.println(posiadaneSamochody.get(wyborNaprawy-1));
                                 }else{
-
-                            }
-
-
+                                    System.out.println("Nie masz tyle kasy.");
+                                }
                                 //pomnozenie wartosci samochodu
                                 liczbaTur += 1;
                                 break;
                             case 2:
-                                //dodanie tury
+
+                                //pomnozenie wartosci samochodu
                                 liczbaTur += 1;
                                 break;
                             case 3:
+                                if(player.kasa>cenasilnik){
+                                    System.out.println("Naprawiłeś "+posiadaneSamochody.get(wyborNaprawy-1).kupny()+" i zapłaciłeś "+cenasilnik);
+                                    player.kasa-=cenasilnik;
+                                    double nowaCena=posiadaneSamochody.get(wyborNaprawy-1).getWartosc()*2;
+                                    posiadaneSamochody.get(wyborNaprawy-1).setWartosc(nowaCena);
+                                    System.out.println(posiadaneSamochody.get(wyborNaprawy-1));
+                                }else{
+                                    System.out.println("Nie masz tyle kasy.");
+                                }
+
                                 liczbaTur += 1;
                                 break;
                             case 4:
+                                if(player.kasa>cenakaroseria){
+                                    System.out.println("Naprawiłeś "+posiadaneSamochody.get(wyborNaprawy-1).kupny()+" i zapłaciłeś "+cenakaroseria);
+                                    player.kasa-=cenakaroseria;
+                                    double nowaCena=posiadaneSamochody.get(wyborNaprawy-1).getWartosc()*1.5;
+                                    posiadaneSamochody.get(wyborNaprawy-1).setWartosc(nowaCena);
+                                    System.out.println(posiadaneSamochody.get(wyborNaprawy-1));
+                                }else{
+                                    System.out.println("Nie masz tyle kasy.");
+                                }
                                 liczbaTur += 1;
                                 break;
                             case 5:
+                                if(player.kasa>cenaskrzynia){
+                                    System.out.println("Naprawiłeś "+posiadaneSamochody.get(wyborNaprawy-1).kupny()+" i zapłaciłeś "+cenasilnik);
+                                    player.kasa-=cenasilnik;
+                                    double nowaCena=posiadaneSamochody.get(wyborNaprawy-1).getWartosc()*1.5;
+                                    posiadaneSamochody.get(wyborNaprawy-1).setWartosc(nowaCena);
+                                    System.out.println(posiadaneSamochody.get(wyborNaprawy-1));
+                                }else{
+                                    System.out.println("Nie masz tyle kasy.");
+                                }
                                 liczbaTur += 1;
                                 break;
                             case 6:break;
-
+                            default:
+                                System.out.println("Nie ma takiego numeru.");
 
                         }
 
@@ -375,7 +401,50 @@ public class Main {
                         break;
 
                     case 6:
-                        //dodaje ture
+                        if(posiadaneSamochody.size()==0){System.out.println("Nie posiadasz żadnego samochodu");}
+                        else if(posiadaneSamochody.size()>0){
+                            for (int i = 0; i < posiadaneSamochody.size(); i++) {
+                                System.out.println(i + 1 + "." + posiadaneSamochody.get(i));
+                            }
+                            System.out.println("Ktory samochód chcesz sprzedać?");
+                            int wyborSprzedania=scanner.nextInt();
+                            System.out.println(" ");
+                            System.out.println("Któremu klientowi chcesz sprzedać samcohód?");
+                            for (int i = 0; i < potKlienci.size(); i++) {
+                                System.out.println(i + 1 + "." + potKlienci.get(i));
+
+                            }
+                            int wyborKlienta=scanner.nextInt();
+                            if(posiadaneSamochody.get(wyborSprzedania-1).getMarka()==potKlienci.get(wyborKlienta-1).favMarka1||
+                                    posiadaneSamochody.get(wyborSprzedania-1).getMarka()==potKlienci.get(wyborKlienta-1).favMarka2){
+
+                                System.out.println("Sprzedałeś "+posiadaneSamochody.get(wyborSprzedania-1).getKolor()+" "
+                                +posiadaneSamochody.get(wyborSprzedania-1).getMarka()
+                                        +" klientowi "+potKlienci.get(wyborKlienta-1).customerName+" za $"
+                                                +posiadaneSamochody.get(wyborSprzedania-1).getWartosc());
+
+                                double cenaPodateMycie=posiadaneSamochody.get(wyborSprzedania-1).getWartosc()-
+                                        40-(posiadaneSamochody.get(wyborSprzedania-1).getWartosc())*0.02;
+
+                                player.kasa+=cenaPodateMycie;
+                                posiadaneSamochody.get(wyborSprzedania-1).liczbaMyc++;
+                                System.out.println("Po odliczeniu podatku i umyciu samochodu zarobiłeś $"+cenaPodateMycie);
+                                posiadaneSamochody.remove(wyborSprzedania-1);
+                                potKlienci.add(klienci.get(0));
+                                klienci.remove(0);
+                                potKlienci.add(klienci.get(0));
+                                klienci.remove(0);
+                                potKlienci.remove(wyborKlienta-1);
+
+                            }else{
+                                System.out.println("Klient nie lubi tej marki, spróbuj z innym.");
+                            }
+                        }
+
+
+
+
+
 //sprzedawanie samochodu
 
                         liczbaTur += 1;
@@ -389,30 +458,32 @@ public class Main {
                         int z = scanner.nextInt();
                         switch (z) {
                             case 1:
-                                potKlienci.add(klienci.get(0));
-                                klienci.remove(0);
-
-                                potKlienci.add(klienci.get(0));
-                                klienci.remove(0);
-
+                                int szansa = random.nextInt(2)+1;
                                 player.kasa -= 1000;
                                 liczbaTur += 1;
+                                int nowiklienci;
+                                if(szansa==1){
+                                    nowiklienci=2;
+                                }else if(szansa==2){
+                                    nowiklienci=3;
+                                }else{
+                                    nowiklienci=4;
+                                }
+                               for(int i=0;i<nowiklienci;i++){
+                                   potKlienci.add(klienci.get(0));
+                                   klienci.remove(0);
+                               }
 
-                                System.out.println("Kupiłeś reklame w lokalnej gazecie. Przyszło 2 nowych klientów.");
+                                System.out.println("Kupiłeś reklame w lokalnej gazecie. Przyszło "+nowiklienci+" nowych klientów.");
                                 break;
                             case 2:
                                 liczbaTur += 1;
-                                int szansa = random.nextInt(2);
-                                if (szansa == 1) {
+
                                     System.out.println("Kupiłes reklame w internecie. Pozyskałeś nowego klienta.");
                                     player.kasa -= 200;
                                     potKlienci.add(klienci.get(0));
                                     klienci.remove(0);
-                                } else {
-                                    System.out.println("Kupiłes reklame w internecie. Niestety nie pozyskałeś żadnego nowego klienta.");
-                                    player.kasa -= 200;
 
-                                }
                                 break;
                             case 3:
                                 break;
@@ -427,8 +498,12 @@ public class Main {
                         break;
 
                     case 9:
-
-
+                        System.out.println("HISTORIA KUPNA AUT.");
+                        for(int i=0;i<hisTranzakcjiKupno.size();i++){
+                            System.out.println(i+1+" "+hisTranzakcjiKupno.get(i));}
+                        System.out.println("HISTORIA SPRZEDARZY AUT");
+                        for(int i=0;i<hisTranzakcjiSprzedarz.size();i++){
+                            System.out.println(i+1+" "+hisTranzakcjiSprzedarz.get(i));}
 //historia tranzakcji
 break;
                     case 10:
@@ -445,7 +520,7 @@ break;
                 }
             } while (player.kasa < 40000);
             System.out.println(liczbaTur);
-
+//intro tutaj
 
         }
 

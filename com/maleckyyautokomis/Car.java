@@ -86,6 +86,7 @@ public class Car {
     public int przebieg;
     public String kolor;
     public String segment;
+    public int liczbaMyc;
     public int mnoznikCeny;//do naprawiania samochodów
 
     //dodać info o tym czy fura dostawcza
@@ -177,5 +178,13 @@ public class Car {
 
     public void setDostawcza(boolean dostawcza) {
         this.dostawcza = dostawcza;
+    }
+
+    public int getLiczbaMyc() {
+        return liczbaMyc;
+    }
+
+    public void setLiczbaMyc(int liczbaMyc) {
+        this.liczbaMyc = liczbaMyc;
     }
 }
