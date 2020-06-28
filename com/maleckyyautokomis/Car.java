@@ -26,7 +26,7 @@ public class Car {
             segment=segmentsamo[1];
             przebieg=p1;
             pladunkowa=random.nextInt(8)+2;
-
+//jeszcze dać wartosc
 
         }else{
             setDostawcza(false);
@@ -34,6 +34,29 @@ public class Car {
             kolor=kolorsamo[numerek];
             segment=segmentsamo[numerek1];
             przebieg=p1;
+            int losElementow=random.nextInt(11)+1;
+            if(losElementow==1){
+                hamulce=false;
+            }else{hamulce=true;}
+            losElementow=random.nextInt(4)+1;
+            if(losElementow==3){
+                zawieszenie=false;
+            }else{zawieszenie=true;}
+            if(losElementow==4){
+                silnik=false;
+            }else{silnik=true;}
+            losElementow=random.nextInt(4)+1;
+            if(losElementow==6){
+                karoseria=false;
+            }else{karoseria=true;}
+            losElementow=random.nextInt(4)+1;
+            if(losElementow==8){
+                skrzyniaBiegow=false;
+            }else{skrzyniaBiegow=true;}
+
+            if(hamulce==true&&zawieszenie==true&&silnik==true&&karoseria==true&&skrzyniaBiegow==true){
+                sprawnosc=true;
+            }
 
             if (marka == markisamo[3] || marka == markisamo[4]) {
                 if (segment == segmentsamo[0]) {
@@ -80,25 +103,26 @@ public class Car {
     String segmentsamo[] = {"Premium", "Standard", "Budget"};
 
 
-    public String carName;
+
     public double wartosc;
     public String marka;
     public int przebieg;
     public String kolor;
     public String segment;
     public int liczbaMyc;
+    public double sumaKosztow;
     public int mnoznikCeny;//do naprawiania samochodów
+    public boolean hamulce;
+    public boolean zawieszenie;
+    public boolean silnik;
+    public boolean karoseria;
+    public boolean skrzyniaBiegow;
+    public boolean sprawnosc;
 
     //dodać info o tym czy fura dostawcza
     public boolean dostawcza;
     public int pladunkowa;
 
-
-
-
-    public String getCarName() {
-        return carName;
-    }
 
     public String getMarka() {
         this.marka = marka;
@@ -186,5 +210,13 @@ public class Car {
 
     public void setLiczbaMyc(int liczbaMyc) {
         this.liczbaMyc = liczbaMyc;
+    }
+
+    public double getSumaKosztow() {
+        return sumaKosztow;
+    }
+
+    public void setSumaKosztow(double sumaKosztow) {
+        this.sumaKosztow = sumaKosztow;
     }
 }
