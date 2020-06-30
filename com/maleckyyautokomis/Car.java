@@ -25,64 +25,103 @@ public class Car {
             kolor=kolorsamo[numerek];
             segment=segmentsamo[1];
             przebieg=p1;
-            pladunkowa=random.nextInt(8)+2;
-//jeszcze dać wartosc
+            pladunkowa=random.nextInt(7)+3;
+            if(pladunkowa <5){
+                wartosc=c2;
+            }else{
+                wartosc=c3;
+            }
+            mnoznikCeny=1;
+            int losElementow=random.nextInt(2)+1;
+            if(losElementow==1){
+                hamulce=false;
+            }else{hamulce=true;}
+            losElementow=random.nextInt(6)+1;
+            if(losElementow==3){
+                zawieszenie=false;
+            }else{zawieszenie=true;}
+            if(zawieszenie==true){silnik=false;}else{silnik=true;}
 
+
+            if(losElementow==6){
+                karoseria=false;
+            }else{karoseria=true;}
+
+            losElementow=random.nextInt(11)+1;
+
+            if(karoseria==true){skrzyniaBiegow=false;}else{skrzyniaBiegow=true;}
+
+            if(hamulce==true&&zawieszenie==true&&silnik==true&&karoseria==true&&skrzyniaBiegow==true){
+                sprawnosc=true;
+            }
+            
         }else{
             setDostawcza(false);
             marka=markisamo[numerek];
             kolor=kolorsamo[numerek];
             segment=segmentsamo[numerek1];
             przebieg=p1;
-            int losElementow=random.nextInt(11)+1;
+            int losElementow=random.nextInt(2)+1;
             if(losElementow==1){
                 hamulce=false;
             }else{hamulce=true;}
-            losElementow=random.nextInt(4)+1;
+            losElementow=random.nextInt(6)+1;
             if(losElementow==3){
                 zawieszenie=false;
             }else{zawieszenie=true;}
-            if(losElementow==4){
-                silnik=false;
-            }else{silnik=true;}
-            losElementow=random.nextInt(4)+1;
+            if(zawieszenie==true){silnik=false;}else{silnik=true;}
+
+
             if(losElementow==6){
                 karoseria=false;
             }else{karoseria=true;}
-            losElementow=random.nextInt(4)+1;
-            if(losElementow==8){
-                skrzyniaBiegow=false;
-            }else{skrzyniaBiegow=true;}
+
+            losElementow=random.nextInt(11)+1;
+
+            if(karoseria==true){skrzyniaBiegow=false;}else{skrzyniaBiegow=true;}
 
             if(hamulce==true&&zawieszenie==true&&silnik==true&&karoseria==true&&skrzyniaBiegow==true){
                 sprawnosc=true;
             }
 
+
             if (marka == markisamo[3] || marka == markisamo[4]) {
                 if (segment == segmentsamo[0]) {
                     wartosc = c1 + 10000;
+
                 } else if (segment == segmentsamo[1]) {
                     wartosc = c1 + 5000;
+
                 } else {
                     wartosc = c1;
+
                 }
             } else if (marka == markisamo[0] || marka == markisamo[1]) {
                 if (segment == segmentsamo[0]) {
                     wartosc = c2 + 10000;
+
                 } else if (segment == segmentsamo[1]) {
                     wartosc = c2 + 5000;
+
                 } else {
                     wartosc = c2;
+
                 }
             } else {
                 if (segment == segmentsamo[0]) {
                     wartosc = c3 + 10000;
+
                 } else if (segment == segmentsamo[1]) {
                     wartosc = c3 + 5000;
+
                 } else {
                     wartosc = c3;
+
                 }
             }
+
+
+
             if (marka == markisamo[2]) {
                 mnoznikCeny = 3;
             } else if (marka == markisamo[0] || marka == markisamo[1]) {
@@ -103,15 +142,20 @@ public class Car {
     String segmentsamo[] = {"Premium", "Standard", "Budget"};
 
 
-
+    private String naprawaHamulce="";
+    private String naprawaZawieszenie="";
+    private String naprawaSilnik="";
+    private String naprawaKaroseria="";
+    private String naprawaSkrzynia="";
     public double wartosc;
+    public double wartoscK;
     public String marka;
     public int przebieg;
     public String kolor;
     public String segment;
     public int liczbaMyc;
     public double sumaKosztow;
-    public int mnoznikCeny;//do naprawiania samochodów
+    public double mnoznikCeny;//do naprawiania samochodów
     public boolean hamulce;
     public boolean zawieszenie;
     public boolean silnik;
@@ -121,7 +165,7 @@ public class Car {
 
     //dodać info o tym czy fura dostawcza
     public boolean dostawcza;
-    public int pladunkowa;
+    private int pladunkowa;
 
 
     public String getMarka() {
@@ -168,22 +212,44 @@ public class Car {
     }
 
     public String toString() {
-        if(dostawcza==true){
-            String samochodInfo ="Dostawczy "+ getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $"
-                    + getWartosc()+" o przestrzeni ładunkowej " +pladunkowa;
-        return samochodInfo;
-        }else {
-            String samochodInfo =getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $" + getWartosc();
-        return samochodInfo;
+        if(sprawnosc==true){
+            if(dostawcza==true){
+                String samochodInfo ="Sprawny dostawczy "+ getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $"
+                        + getWartosc()+" o przestrzeni ładunkowej " + getPladunkowa();
+                return samochodInfo;
+            }else {
+                String samochodInfo ="Sprawny "+getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $" + getWartosc();
+                return samochodInfo;
+            }
+        }else{
+            if(dostawcza==true){
+                String samochodInfo ="Dostawczy "+ getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $"
+                        + getWartosc()+" o przestrzeni ładunkowej " + getPladunkowa();
+                return samochodInfo;
+            }else {
+                String samochodInfo =getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $" + getWartosc();
+                return samochodInfo;
+            }
         }
+
     }
     public String kupny(){
         String kupne= getKolor()+" "+getMarka()+" w wersji "+getSegment();
+        return kupne;   }
 
- return kupne;   }
+        public String hisKupna(){
+
+            String samochodInfo =getKolor() + " " + getMarka() + " w wersji " + getSegment() + " z przebiegiem " + getPrzebieg() + " o wartości $" + getWartoscK();
+            return samochodInfo;
+        }
+
+        public String historiaNapraw(){
+            String hisNapraw="W "+getKolor() + " " + getMarka() +" było naprawiane: "+getNaprawaHamulce()+" "+getNaprawaZawieszenie()+" "+getNaprawaSilnik()+" "+getNaprawaKaroseria()+" "+getNaprawaSkrzynia();
+return hisNapraw;
+        }
 
 
-    public int getMnoznikCeny() {
+    public double getMnoznikCeny() {
         return mnoznikCeny;
     }
 
@@ -218,5 +284,61 @@ public class Car {
 
     public void setSumaKosztow(double sumaKosztow) {
         this.sumaKosztow = sumaKosztow;
+    }
+
+    public double getWartoscK() {
+        return wartoscK;
+    }
+
+    public void setWartoscK(double wartoscK) {
+        this.wartoscK = wartoscK;
+    }
+
+    public String getNaprawaHamulce() {
+        return naprawaHamulce;
+    }
+
+    public void setNaprawaHamulce(String naprawaHamulce) {
+        this.naprawaHamulce = naprawaHamulce;
+    }
+
+    public String getNaprawaZawieszenie() {
+        return naprawaZawieszenie;
+    }
+
+    public void setNaprawaZawieszenie(String naprawaZawieszenie) {
+        this.naprawaZawieszenie = naprawaZawieszenie;
+    }
+
+    public String getNaprawaSilnik() {
+        return naprawaSilnik;
+    }
+
+    public void setNaprawaSilnik(String naprawaSilnik) {
+        this.naprawaSilnik = naprawaSilnik;
+    }
+
+    public String getNaprawaKaroseria() {
+        return naprawaKaroseria;
+    }
+
+    public void setNaprawaKaroseria(String naprawaKaroseria) {
+        this.naprawaKaroseria = naprawaKaroseria;
+    }
+
+    public String getNaprawaSkrzynia() {
+        return naprawaSkrzynia;
+    }
+
+    public void setNaprawaSkrzynia(String naprawaSkrzynia) {
+        this.naprawaSkrzynia = naprawaSkrzynia;
+    }
+
+    public int getPladunkowa() {
+        return pladunkowa;
+    }
+
+    public void setPladunkowa(int pladunkowa) {
+        this.pladunkowa = pladunkowa;
     }
 }

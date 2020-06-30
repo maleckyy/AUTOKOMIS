@@ -9,7 +9,7 @@ public class Main {
 
         Player player = new Player();
         player.kasa = 20000.00;
-        int mycia;
+
 
 
 //INTRO GIERKI
@@ -20,27 +20,21 @@ public class Main {
         System.out.println("Jak sie nazywasz?");
         player.playerName = scanner.nextLine();
 
-
-
         System.out.println("Witaj " + player.playerName.substring(0, 1).toUpperCase() + player.playerName.substring(1) + " widze że zostało ci " + player.kasa + " złoty na koncie, to rozsądna ilość kaski żeby zaczać handlować");
         System.out.println("Zostało mi życzyć ci powodzenia, do dzieła!");
 
 
 //DO SAMOCHODÓW
     String markisamo[] = {"Volvo", "BMW", "Mercedes", "Opel", "Fiat"};
-
-    String kolorsamo[] = {"Czerwony", "Czarny", "Szary", "Niebieski", "Żółty"};
-
     String segmentsamo[] = {"Premium", "Standard", "Budget"};
 
 //IMIONa KLIENTÓW ,jest ich 15.
-    String klientName[] = {"Paweł", "Marcin", "Roman", "Rysiek", "Michał", "Patryk", "Adam", "Janek", "Szymon", "Mikołaj", "Olaf", "Wojtek", "Matuesz", "Oskar", "Daniel"};
 
 //LISTY
     ArrayList<Car>posiadaneSamochody = new ArrayList<Car>();
     ArrayList<Customer> potKlienci = new ArrayList<Customer>();
     ArrayList<Car>samochoduDoKupienia = new ArrayList<Car>();
-    ArrayList hisNapraw = new ArrayList();
+    ArrayList <Car>hisNapraw = new ArrayList<Car>();
     ArrayList<Car> hisTranzakcjiKupno = new ArrayList<Car>();
     ArrayList<Car>hisTranzakcjiSprzedarz = new ArrayList<Car>();
 
@@ -48,29 +42,9 @@ public class Main {
     ArrayList <Customer>klienci = new ArrayList<Customer>();
     ArrayList <Mechanicy>mechanicy = new ArrayList<Mechanicy>();
 
-
-//GENERATORY LOSOWYCH LICZB
-    //ZAKRES 5 LICZB i 3 LICZB i 15
     Random random = new Random();
-    int numerek;
-    int numerek1;
-    int numerek2;
-    numerek = random.nextInt(5);//do samochdów i kolorów
-    numerek1 = random.nextInt(3);//do segmentów
-    numerek2 = random.nextInt(15);//do klientów
 
-    //GENERATOR CENY
-    int c1, c2, c3, c4;//c1 tania(fiat opel),c2 srednia(volvo bmw) c3 droga(merc), c4 to kasa klienta
-    c1 = random.nextInt(7000) + 5000;
-
-    c2 = random.nextInt(10000) + 15000;
-
-    c3 = random.nextInt(20000) + 27000;
-
-    c4 = random.nextInt(40000) + 15000;
-
-    //GENERATOR PRZEBIEGÓW
-    int p1 = random.nextInt(100000) + 100000;
+  int   c2 = random.nextInt(10000) + 15000;
 
 //mechanicy
         Mechanicy janusz=new Mechanicy();
@@ -96,7 +70,7 @@ public class Main {
     //TWORZENIE KLIENTA
         Customer customer1 = new Customer();
         customer1.favMarka1=markisamo[4];
-        customer1.kasaKlienta=17392;
+        customer1.kasaKlienta=25021.02;
         potKlienci.add(customer1);
 
         Customer customer2 = new Customer();
@@ -162,7 +136,7 @@ public class Main {
         drugi.marka=markisamo[4];
         drugi.wartosc=c2;
         drugi.segment=segmentsamo[1];
-        drugi.dostawcza=false;
+        drugi.dostawcza=true;
 
 
         c2 = random.nextInt(10000) + 15000;
@@ -245,7 +219,7 @@ public class Main {
                 System.out.println("10.HISTORIA NAPRAW SAMOCHODU");
                 System.out.println("11.SUMA KOSZTÓW NAPRAW I MYCIA SAMOCHODU");
 
-                System.out.println("testowanie tur gracza trzeba schować i dacan koniec " + liczbaTur);
+
 
                 System.out.println(" ");
                 System.out.println("WPISZ NUMER ABY WYBRAĆ OPCJE");
@@ -265,18 +239,21 @@ public class Main {
                             System.out.println(i + 1 + "." + samochoduDoKupienia.get(i));
 
                         }
+                        System.out.println(samochoduDoKupienia.size()+1 +".Powrót");
                         System.out.println("");
                         System.out.println("Który samochod chcesz kupić?");
                         System.out.println("");
+                        System.out.println("Twoj stan konta $"+player.kasa);
                         int wyborKupna=scanner.nextInt();
                         if(wyborKupna<=samochoduDoKupienia.size()) {
                             if (player.kasa > samochoduDoKupienia.get(wyborKupna - 1).getWartosc()) {
                                 System.out.println("Kupiłeś " + samochoduDoKupienia.get(wyborKupna - 1).kupny());
                                 player.kasa -=40+ (samochoduDoKupienia.get(wyborKupna - 1).getWartosc())*1.02;
-                            //    samochoduDoKupienia.get(wyborKupna - 1).setLiczbaMyc(samochoduDoKupienia.get(wyborKupna - 1).getLiczbaMyc() + 1);
                                 samochoduDoKupienia.get(wyborKupna - 1).liczbaMyc++;
-                                posiadaneSamochody.add(samochoduDoKupienia.get(wyborKupna - 1));
                                 hisTranzakcjiKupno.add(samochoduDoKupienia.get(wyborKupna - 1));
+                                samochoduDoKupienia.get(wyborKupna - 1).wartoscK=40+ (samochoduDoKupienia.get(wyborKupna - 1).getWartosc())*1.02;
+                                posiadaneSamochody.add(samochoduDoKupienia.get(wyborKupna - 1));
+
                                 samochoduDoKupienia.remove(wyborKupna - 1);
                                 samochoduDoKupienia.add(samochody.get(0));
                                 samochody.remove(0);
@@ -288,17 +265,19 @@ public class Main {
                             }else{
                                 System.out.println("Nie masz tyle pieniędzy by kupić pojazd.");
                             }
-                        }else{
-                            System.out.println("Nie ma takiego samochodu.");
                         }
 
                         break;
 
                     case 3:
                         //pokazuje posiadane samochody
-                        for (int i = 0; i < posiadaneSamochody.size(); i++) {
+                        if(posiadaneSamochody.size()==0) {
+                            System.out.println("Nie masz żadnego samochodu.");
+                        }else{
+                            for (int i = 0; i < posiadaneSamochody.size(); i++) {
 
-                            System.out.println(i + 1 + "." + posiadaneSamochody.get(i));
+                                System.out.println(i + 1 + "." + posiadaneSamochody.get(i));
+                            }
                         }
                         break;
 
@@ -325,35 +304,38 @@ public class Main {
                             for (int liczba = 0; liczba < posiadaneSamochody.size(); liczba++) {
                                 System.out.println(liczba + 1 + "." + posiadaneSamochody.get(liczba));
                                 System.out.println(" ");
-                               if(posiadaneSamochody.get(liczba).sprawnosc==true){
-                                   System.out.println("Ten samochod jest w pełni sprawny");
-                                   System.out.println("");
-                               }else {
+                                if (posiadaneSamochody.get(liczba).sprawnosc == true) {
+                                    System.out.println("Ten samochod jest w pełni sprawny");
+                                    System.out.println("");
+                                    break;
+                                } else {
 
-                                   System.out.println("Sprawności elementów pojazdu.(sprawne=true)");
-                                   System.out.println("            Hamulce: " + posiadaneSamochody.get(liczba).hamulce);
-                                   System.out.println("            Zawieszenie: " + posiadaneSamochody.get(liczba).zawieszenie);
-                                   System.out.println("            Silnik: " + posiadaneSamochody.get(liczba).silnik);
-                                   System.out.println("            Karoseria: " + posiadaneSamochody.get(liczba).karoseria);
-                                   System.out.println("            Skrzynia biegów: " + posiadaneSamochody.get(liczba).skrzyniaBiegow);
-                                   if (posiadaneSamochody.get(liczba).dostawcza == true) {
-                                       System.out.println("            Pojemność ładunkowa: " + posiadaneSamochody.get(liczba).pladunkowa);
-                                   }
-                               }
+                                    System.out.println("Sprawności elementów pojazdu.(sprawne=true)");
+                                    System.out.println("            Hamulce: " + posiadaneSamochody.get(liczba).hamulce);
+                                    System.out.println("            Zawieszenie: " + posiadaneSamochody.get(liczba).zawieszenie);
+                                    System.out.println("            Silnik: " + posiadaneSamochody.get(liczba).silnik);
+                                    System.out.println("            Karoseria: " + posiadaneSamochody.get(liczba).karoseria);
+                                    System.out.println("            Skrzynia biegów: " + posiadaneSamochody.get(liczba).skrzyniaBiegow);
+                                    if (posiadaneSamochody.get(liczba).dostawcza == true) {
+                                        System.out.println("            Pojemność ładunkowa: " + posiadaneSamochody.get(liczba).getPladunkowa());
+                                    }
+                                }
                             }
 
                             int wyborSamochoduDoNaprawy = scanner.nextInt();
-//wybranie samochodu do naprawy
-//warianty cen
+
                             if(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sprawnosc==true){
                                 System.out.println("Ten samochod jest sprawny nie ma czego naprawiać.");
-                            }else{
+                            }
+                            else{
                                 double cenahamulce, cenazawieszenie, cenasilnik, cenakaroseria, cenaskrzynia;
-                                cenahamulce = (200 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny()) + mechanicy.get(wybormechanika - 1).cenaMechanika;
-                                cenazawieszenie = (600 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny()) + mechanicy.get(wybormechanika - 1).cenaMechanika;
-                                cenasilnik = (3000 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny()) + mechanicy.get(wybormechanika - 1).cenaMechanika;
-                                cenakaroseria = (1500 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny()) + mechanicy.get(wybormechanika - 1).cenaMechanika;
-                                cenaskrzynia = (1500 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny()) + mechanicy.get(wybormechanika - 1).cenaMechanika;
+                                cenahamulce = 200.0 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny() + mechanicy.get(wybormechanika - 1).cenaMechanika;
+                                cenazawieszenie = 600.0* posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny() + mechanicy.get(wybormechanika - 1).cenaMechanika;
+                                cenasilnik = 3000.0 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny()+ mechanicy.get(wybormechanika - 1).cenaMechanika;
+                                cenakaroseria = 1500.0 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny() + mechanicy.get(wybormechanika - 1).cenaMechanika;
+                                cenaskrzynia = 1500.0 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny() + mechanicy.get(wybormechanika - 1).cenaMechanika;
+                             double  cenapojemnosc = 500.0 * posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getMnoznikCeny() + mechanicy.get(wybormechanika - 1).cenaMechanika;
+
 
                                 ArrayList<Double> cennik = new ArrayList<Double>();
                                 cennik.add(cenahamulce);
@@ -361,17 +343,19 @@ public class Main {
                                 cennik.add(cenasilnik);
                                 cennik.add(cenakaroseria);
                                 cennik.add(cenaskrzynia);
+                                cennik.add(cenapojemnosc);
 
 
 
                                 System.out.println("Co chciałbyś naprawić?");
                                 System.out.println("");
-                                System.out.println("1.Hamulce, podniosą wartość auta o 10% - koszt to " + cenahamulce + " złotych.");
-                                System.out.println("2.Zawieszenie, podniesie wartość auta o 20% - koszt to " + cenazawieszenie + "złotych.");
-                                System.out.println("3.Silnik, podniesie wartość auta o 100% - koszt to " + cenasilnik + "złotych.");
-                                System.out.println("4.Karoseria, podniesie wartość auta o 50% - koszt to " + cenakaroseria + "złotych.");
-                                System.out.println("5.Skrzynia biegów, podniesie wartość auta o 50% - koszt to " + cenaskrzynia + "złotych.");
-                                System.out.println("6.Powrót.");
+                                System.out.println("1.Hamulce, podniosą wartość auta o 10% - koszt to $" + cennik.get(0) );
+                                System.out.println("2.Zawieszenie, podniesie wartość auta o 20% - koszt to $" + cennik.get(1) );
+                                System.out.println("3.Silnik, podniesie wartość auta o 100% - koszt to $" + cennik.get(2) );
+                                System.out.println("4.Karoseria, podniesie wartość auta o 50% - koszt to $" + cennik.get(3) );
+                                System.out.println("5.Skrzynia biegów, podniesie wartość auta o 50% - koszt to $" + cennik.get(4) );
+                               System.out.println("6.Pojemność ładunkowa, podniesie o 2 punkty pojemność i wartość o 20%- koszt to $"+cennik.get(5));
+                                System.out.println("7.Powrót.");
                                 int naprawa = scanner.nextInt();
 //wybor czesci do naprawy
                                 if (player.kasa < cennik.get(naprawa - 1)) {
@@ -387,8 +371,10 @@ public class Main {
                                                 System.out.println("Naprawa wyniosła $" + cenahamulce);
                                                 double nowaCena = posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).getWartosc() * 1.1;
                                                 posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).setWartosc(nowaCena);
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).hamulce=true;
                                                 liczbaTur++;
-                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenahamulce;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaHamulce("Hamulce");
 
                                             } else if (wybormechanika == 2) {
                                                 //marian
@@ -404,7 +390,8 @@ public class Main {
                                                         posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).hamulce=true;
                                                         hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                         liczbaTur++;
-                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenahamulce;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaHamulce("Hamulce");
                                                     } else {
                                                         System.out.println("Marianowi nie udało sie naprawić samemu twojego pojazdu" +
                                                                 ", potrzebował pomocy Janusza ale nie stać cie na taki wydatek");
@@ -419,7 +406,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).hamulce=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenahamulce;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaHamulce("Hamulce");
                                                 }
 
                                             } else {
@@ -436,7 +424,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).hamulce=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenahamulce;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaHamulce("Hamulce");
 
                                                     int szansazepsucia = random.nextInt(100);
                                                     if (szansazepsucia == 53 || szansazepsucia == 11) {
@@ -469,7 +458,8 @@ public class Main {
                                                 posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).zawieszenie=true;
                                                 hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                 liczbaTur++;
-                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenazawieszenie;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaZawieszenie("Zawieszenie");
 
                                             } else if (wybormechanika == 2) {
                                                 //marian
@@ -485,7 +475,8 @@ public class Main {
                                                         posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).zawieszenie=true;
                                                         hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                         liczbaTur++;
-                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenazawieszenie1;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaZawieszenie("Zawieszenie");
                                                     } else {
                                                         System.out.println("Marianowi nie udało sie naprawić samemu twojego pojazdu" +
                                                                 ", potrzebował pomocy Janusza ale nie stać cie na taki wydatek");
@@ -500,7 +491,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).zawieszenie=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenazawieszenie;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaZawieszenie("Zawieszenie");
                                                 }
 
                                             } else {
@@ -517,7 +509,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).zawieszenie=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenazawieszenie;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaZawieszenie("Zawieszenie");
 
                                                     int szansazepsucia = random.nextInt(100);
                                                     if (szansazepsucia == 53 || szansazepsucia == 11) {
@@ -550,7 +543,8 @@ public class Main {
                                                 posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).silnik=true;
                                                 hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                 liczbaTur++;
-                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenasilnik;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSilnik("Silnik");
 
 
                                             } else if (wybormechanika == 2) {
@@ -567,7 +561,8 @@ public class Main {
                                                         posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).silnik=true;
                                                         hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                         liczbaTur++;
-                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenasilnik1;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSilnik("Silnik");
 
                                                     } else {
                                                         System.out.println("Marianowi nie udało sie naprawić samemu twojego pojazdu" +
@@ -583,7 +578,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).silnik=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenasilnik;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSilnik("Silnik");
                                                 }
 
                                             } else {
@@ -600,7 +596,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).silnik=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenasilnik;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSilnik("Silnik");
 
                                                     int szansazepsucia = random.nextInt(100);
                                                     if (szansazepsucia == 53 || szansazepsucia == 11) {
@@ -632,7 +629,8 @@ public class Main {
                                                 posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).karoseria=true;
                                                 hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                 liczbaTur++;
-                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenakaroseria;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaKaroseria("Karoseria");
 
 
                                             } else if (wybormechanika == 2) {
@@ -649,7 +647,8 @@ public class Main {
                                                         posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).karoseria=true;
                                                         hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                         liczbaTur++;
-                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenakaroseria1;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaKaroseria("Karoseria");
                                                     } else {
                                                         System.out.println("Marianowi nie udało sie naprawić samemu twojego pojazdu" +
                                                                 ", potrzebował pomocy Janusza ale nie stać cie na taki wydatek");
@@ -664,7 +663,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).karoseria=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenakaroseria;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaKaroseria("Karoseria");
                                                 }
 
                                             } else {
@@ -681,7 +681,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).karoseria=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenakaroseria;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaKaroseria("Karoseria");
 
                                                     int szansazepsucia = random.nextInt(100);
                                                     if (szansazepsucia == 53 || szansazepsucia == 11) {
@@ -714,7 +715,8 @@ public class Main {
                                                 posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).skrzyniaBiegow=true;
                                                 hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                 liczbaTur++;
-                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenaskrzynia;
+                                                posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSkrzynia("Skrzynia biegów");
 
 
                                             } else if (wybormechanika == 2) {
@@ -731,7 +733,8 @@ public class Main {
                                                         posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).skrzyniaBiegow=true;
                                                         hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                         liczbaTur++;
-                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenaskrzynia1;
+                                                        posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSkrzynia("Skrzynia biegów");
 
                                                     } else {
                                                         System.out.println("Marianowi nie udało sie naprawić samemu twojego pojazdu" +
@@ -747,7 +750,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).skrzyniaBiegow=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenaskrzynia;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSkrzynia("Skrzynia biegów");
                                                 }
 
                                             } else {
@@ -764,7 +768,8 @@ public class Main {
                                                     posiadaneSamochody.get(wyborSamochoduDoNaprawy - 1).skrzyniaBiegow=true;
                                                     hisNapraw.add(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1));
                                                     liczbaTur++;
-                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=nowaCena;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenaskrzynia;
+                                                    posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setNaprawaSkrzynia("Skrzynia biegów");
 
                                                     int szansazepsucia = random.nextInt(100);
                                                     if (szansazepsucia == 53 || szansazepsucia == 11) {
@@ -783,8 +788,20 @@ public class Main {
                                                 }
                                             }
                                         }
-                                    }else{
+                                    }else if(naprawa==6){
+                                        if(posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).dostawcza==true){
+                                            System.out.println("Powiekszyłeś pojemność samochodu o 2 jednostki. Zapłaciłeś $"+cenapojemnosc);
+                                            player.kasa-=cenapojemnosc;
+                                            posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).setPladunkowa(+2);
+                                            liczbaTur++;
+                                            posiadaneSamochody.get(wyborSamochoduDoNaprawy-1).sumaKosztow+=cenapojemnosc;
+                                        }else{
+                                            System.out.println("Samochod nie jest dostawczy.");
+                                            break;
+                                        }
+                                    } else{
                                         System.out.println("Nie ma takiej części");
+                                        break;
                                     }
                                 }
                             }
@@ -800,28 +817,25 @@ public class Main {
 
                     case 6:
                         if(posiadaneSamochody.size()==0){System.out.println("Nie posiadasz żadnego samochodu");}
-                        else if(posiadaneSamochody.size()>0){
+                        else if(posiadaneSamochody.size()>0) {
                             for (int i = 0; i < posiadaneSamochody.size(); i++) {
                                 System.out.println(i + 1 + "." + posiadaneSamochody.get(i));
                             }
                             System.out.println("Ktory samochód chcesz sprzedać?");
-                            int wyborSprzedania=scanner.nextInt();
+                            int wyborSprzedania = scanner.nextInt();
                             System.out.println(" ");
-                            System.out.println("Któremu klientowi chcesz sprzedać samcohód?");
+                            System.out.println("Któremu klientowi chcesz sprzedać samochód?");
                             for (int i = 0; i < potKlienci.size(); i++) {
                                 System.out.println(i + 1 + "." + potKlienci.get(i));
 
                             }
-                            int wyborKlienta=scanner.nextInt();
+                            int wyborKlienta = scanner.nextInt();
 
+                            if(posiadaneSamochody.get(wyborSprzedania-1).sprawnosc==potKlienci.get(wyborKlienta-1).sprawne){
 
+                                if (posiadaneSamochody.get(wyborSprzedania - 1).dostawcza == true && potKlienci.get(wyborKlienta - 1).lubiDostawcze == true) {
 
-                            if(posiadaneSamochody.get(wyborSprzedania-1).getMarka()==potKlienci.get(wyborKlienta-1).favMarka1||
-                                    posiadaneSamochody.get(wyborSprzedania-1).getMarka()==potKlienci.get(wyborKlienta-1).favMarka2){
-                                if(potKlienci.get(wyborKlienta-1).kasaKlienta<posiadaneSamochody.get(wyborSprzedania-1).getWartosc()){
-                                    System.out.println("Klient nie ma tyle gotówki aby kupić ten pojazd.");
-                                }else {
-                                    System.out.println("Sprzedałeś " + posiadaneSamochody.get(wyborSprzedania - 1).getKolor() + " "
+                                    System.out.println("Sprzedałeś dostawczy " + posiadaneSamochody.get(wyborSprzedania - 1).getKolor() + " "
                                             + posiadaneSamochody.get(wyborSprzedania - 1).getMarka()
                                             + " klientowi " + potKlienci.get(wyborKlienta - 1).customerName + " za $"
                                             + posiadaneSamochody.get(wyborSprzedania - 1).getWartosc());
@@ -840,14 +854,103 @@ public class Main {
                                     klienci.remove(0);
                                     potKlienci.remove(wyborKlienta - 1);
 
+
+                                } else if (posiadaneSamochody.get(wyborSprzedania - 1).dostawcza == false && potKlienci.get(wyborKlienta - 1).lubiDostawcze == false) {
+
+                                    if (posiadaneSamochody.get(wyborSprzedania - 1).getMarka() == potKlienci.get(wyborKlienta - 1).favMarka1 ||
+                                            posiadaneSamochody.get(wyborSprzedania - 1).getMarka() == potKlienci.get(wyborKlienta - 1).favMarka2) {
+                                        if (potKlienci.get(wyborKlienta - 1).kasaKlienta < posiadaneSamochody.get(wyborSprzedania - 1).getWartosc()) {
+                                            System.out.println("Klient nie ma tyle gotówki aby kupić ten pojazd.");
+                                        } else {
+                                            System.out.println("Sprzedałeś " + posiadaneSamochody.get(wyborSprzedania - 1).getKolor() + " "
+                                                    + posiadaneSamochody.get(wyborSprzedania - 1).getMarka()
+                                                    + " klientowi " + potKlienci.get(wyborKlienta - 1).customerName + " za $"
+                                                    + posiadaneSamochody.get(wyborSprzedania - 1).getWartosc());
+
+                                            double cenaPodateMycie = posiadaneSamochody.get(wyborSprzedania - 1).getWartosc() -
+                                                    40 - (posiadaneSamochody.get(wyborSprzedania - 1).getWartosc()) * 0.02;
+
+                                            player.kasa += cenaPodateMycie;
+                                            posiadaneSamochody.get(wyborSprzedania - 1).liczbaMyc++;
+                                            System.out.println("Po odliczeniu podatku i umyciu samochodu zarobiłeś $" + cenaPodateMycie);
+                                            hisTranzakcjiSprzedarz.add(posiadaneSamochody.get(wyborSprzedania - 1));
+                                            posiadaneSamochody.remove(wyborSprzedania - 1);
+                                            potKlienci.add(klienci.get(0));
+                                            klienci.remove(0);
+                                            potKlienci.add(klienci.get(0));
+                                            klienci.remove(0);
+                                            potKlienci.remove(wyborKlienta - 1);
+
+                                        }
+                                    } else {
+                                        System.out.println("Klient nie lubi tej marki, spróbuj z innym.");
+                                    }
+                                }else{
+                                    System.out.println("Klient chce inny rodzaj pojazdu.");
                                 }
+
+                            }else if(potKlienci.get(wyborKlienta-1).sprawne==false&&posiadaneSamochody.get(wyborSprzedania-1).sprawnosc==true){
+
+                                if (posiadaneSamochody.get(wyborSprzedania - 1).dostawcza == true && potKlienci.get(wyborKlienta - 1).lubiDostawcze == true) {
+
+                                    System.out.println("Sprzedałeś dostawczy " + posiadaneSamochody.get(wyborSprzedania - 1).getKolor() + " "
+                                            + posiadaneSamochody.get(wyborSprzedania - 1).getMarka()
+                                            + " klientowi " + potKlienci.get(wyborKlienta - 1).customerName + " za $"
+                                            + posiadaneSamochody.get(wyborSprzedania - 1).getWartosc());
+
+                                    double cenaPodateMycie = posiadaneSamochody.get(wyborSprzedania - 1).getWartosc() -
+                                            40 - (posiadaneSamochody.get(wyborSprzedania - 1).getWartosc()) * 0.02;
+
+                                    player.kasa += cenaPodateMycie;
+                                    posiadaneSamochody.get(wyborSprzedania - 1).liczbaMyc++;
+                                    System.out.println("Po odliczeniu podatku i umyciu samochodu zarobiłeś $" + cenaPodateMycie);
+                                    hisTranzakcjiSprzedarz.add(posiadaneSamochody.get(wyborSprzedania - 1));
+                                    posiadaneSamochody.remove(wyborSprzedania - 1);
+                                    potKlienci.add(klienci.get(0));
+                                    klienci.remove(0);
+                                    potKlienci.add(klienci.get(0));
+                                    klienci.remove(0);
+                                    potKlienci.remove(wyborKlienta - 1);
+
+
+                                } else if (posiadaneSamochody.get(wyborSprzedania - 1).dostawcza == false && potKlienci.get(wyborKlienta - 1).lubiDostawcze == false) {
+
+                                    if (posiadaneSamochody.get(wyborSprzedania - 1).getMarka() == potKlienci.get(wyborKlienta - 1).favMarka1 ||
+                                            posiadaneSamochody.get(wyborSprzedania - 1).getMarka() == potKlienci.get(wyborKlienta - 1).favMarka2) {
+                                        if (potKlienci.get(wyborKlienta - 1).kasaKlienta < posiadaneSamochody.get(wyborSprzedania - 1).getWartosc()) {
+                                            System.out.println("Klient nie ma tyle gotówki aby kupić ten pojazd.");
+                                        } else {
+                                            System.out.println("Sprzedałeś " + posiadaneSamochody.get(wyborSprzedania - 1).getKolor() + " "
+                                                    + posiadaneSamochody.get(wyborSprzedania - 1).getMarka()
+                                                    + " klientowi " + potKlienci.get(wyborKlienta - 1).customerName + " za $"
+                                                    + posiadaneSamochody.get(wyborSprzedania - 1).getWartosc());
+
+                                            double cenaPodateMycie = posiadaneSamochody.get(wyborSprzedania - 1).getWartosc() -
+                                                    40 - (posiadaneSamochody.get(wyborSprzedania - 1).getWartosc()) * 0.02;
+
+                                            player.kasa += cenaPodateMycie;
+                                            posiadaneSamochody.get(wyborSprzedania - 1).liczbaMyc++;
+                                            System.out.println("Po odliczeniu podatku i umyciu samochodu zarobiłeś $" + cenaPodateMycie);
+                                            hisTranzakcjiSprzedarz.add(posiadaneSamochody.get(wyborSprzedania - 1));
+                                            posiadaneSamochody.remove(wyborSprzedania - 1);
+                                            potKlienci.add(klienci.get(0));
+                                            klienci.remove(0);
+                                            potKlienci.add(klienci.get(0));
+                                            klienci.remove(0);
+                                            potKlienci.remove(wyborKlienta - 1);
+
+                                        }
+                                    } else {
+                                        System.out.println("Klient nie lubi tej marki, spróbuj z innym.");
+                                    }
+                                }else{
+                                    System.out.println("Klient chce inny rodzaj pojazdu.");
+                                }
+
                             }else{
-                                System.out.println("Klient nie lubi tej marki, spróbuj z innym.");
+                                System.out.println("Samochod nie spełnia oczekiwań klienta.");
                             }
                         }
-
-
-
 
 
 //sprzedawanie samochodu
@@ -899,33 +1002,37 @@ public class Main {
 
 
                     case 8:
-                        System.out.println("Stan konta wynosi " + player.kasa + " złotych.");
+                        System.out.println("Stan konta wynosi $" + player.kasa + ".");
                         break;
 
                     case 9:
                         System.out.println("HISTORIA KUPNA AUT.");
                         for(int i=0;i<hisTranzakcjiKupno.size();i++){
-                            System.out.println(i+1+".Kupiono "+hisTranzakcjiKupno.get(i));}
+                            System.out.println(i+1+".Kupiono "+hisTranzakcjiKupno.get(i).hisKupna());}
                         System.out.println("HISTORIA SPRZEDARZY AUT");
                         for(int i=0;i<hisTranzakcjiSprzedarz.size();i++){
                             System.out.println(i+1+".Sprzedano "+hisTranzakcjiSprzedarz.get(i));}
 //historia tranzakcji
 break;
                     case 10:
-                        for(int i=0;i<samochody.size();i++){
-                        System.out.println(i+1+" "+samochody.get(i));}
+                        for(int i=0;i<hisNapraw.size();i++){
+                        System.out.println(i+1+" "+hisNapraw.get(i).historiaNapraw());}
 break;
                     case 11:
                         for(int i=0;i<posiadaneSamochody.size();i++){
-                            System.out.println(i+1+" "+posiadaneSamochody.get(i).liczbaMyc);}
+                            System.out.println(i+1+"."+posiadaneSamochody.get(i).getKolor()+" "+posiadaneSamochody.get(i).getMarka()+" był myty "+
+                                    +posiadaneSamochody.get(i).liczbaMyc+" raz a suma napraw wynosi $"+posiadaneSamochody.get(i).sumaKosztow);
+
+                        }
                         break;
 
                     default:
                         System.out.println("Nie ma takiego numeru...jeszcze raz");
                 }
             } while (player.kasa < 40000);
-            System.out.println(liczbaTur);
-//intro tutaj
+            System.out.println("Brawo, podwoiłeś stan stojego konta. Zrobiłeś to w "+liczbaTur);
+        System.out.println("");
+        System.out.println("Patryk Kupfer INiS pr2");
 
         }
 

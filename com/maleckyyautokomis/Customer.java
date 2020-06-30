@@ -5,8 +5,9 @@ import java.util.Random;
 
 public class Customer {
         public String customerName;
-        public int kasaKlienta;
+        public double   kasaKlienta;
         public boolean sprawne;//czy samochod w pełni sprawny
+    public boolean lubiDostawcze;
     //ulubione marki
         public String favMarka1;
         public String favMarka2;
@@ -17,7 +18,7 @@ public class Customer {
 
     public Customer(){
             Random random =new Random();
-        int    c4 = random.nextInt(45000) + 10000;
+        int    c4 = random.nextInt(35000) + 20000;
        int numerek = random.nextInt(5);//do samochdów i kolorów
      int   numerek2 = random.nextInt(15);//do klientów
             customerName=klientName[numerek2];
@@ -32,11 +33,41 @@ public class Customer {
             }
 
         }
+        numerek = random.nextInt(5);
+        if(numerek==2){
+            lubiDostawcze=true;
+        }else{
+            lubiDostawcze=false;
+        }
+        numerek = random.nextInt(5);
+        if(numerek==2){
+            sprawne=true;
+        }else{
+            sprawne=false;}
 
         }
 
         public String toString(){
-            return customerName+" ma $"+kasaKlienta+" a jego ulubione marki to "+favMarka1+" i "+favMarka2+".";
+        if(sprawne==true){
+            if(lubiDostawcze==false) {
+                String a= customerName + " ma $" + kasaKlienta + " a jego ulubione marki to sprawne " + favMarka1 + " i " + favMarka2 + ".";
+                return a;
+            }else{
+                String a= customerName + " ma $" + kasaKlienta + " a jego ulubione marki to sprawne dostawcze " + favMarka1 + " i " + favMarka2 + ".";
+                return a;
+            }
+        }else{
+            if(lubiDostawcze==false) {
+                String a= customerName + " ma $" + kasaKlienta + " a jego ulubione marki to " + favMarka1 + " i " + favMarka2 + ".";
+                return a;
+            }else{
+                String a= customerName + " ma $" + kasaKlienta + " a jego ulubione marki to dostawcze " + favMarka1 + " i " + favMarka2 + ".";
+                return a;
+            }
+        }
+
+
+
         }
 
 }
