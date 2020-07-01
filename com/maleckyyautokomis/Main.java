@@ -1029,6 +1029,10 @@ break;
                     default:
                         System.out.println("Nie ma takiego numeru...jeszcze raz");
                 }
+                if(player.kasa<0){
+                    System.out.println("Zbankrutowałeś... Zajęło ci to "+liczbaTur+" ruchów.");
+                    System.exit(0);
+                }
             } while (player.kasa < 40000);
             System.out.println("Brawo, podwoiłeś stan stojego konta. Zrobiłeś to w "+liczbaTur);
         System.out.println("");
