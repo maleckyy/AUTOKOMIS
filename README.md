@@ -12,5 +12,5 @@ Gra tekstowa o prowadzeniu własnego komisu samochodowego. Jako właściciel sku
 -intellij IDEA
 
 
-
+![]https://github.com/maleckyy/AUTOKOMIS/blob/master/zrzut.PNG
 
